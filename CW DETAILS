@@ -1,0 +1,52 @@
+COURSEWORK DETAILS
+
+ You will answer three questions below using one of the test datasets of your choice.
+
+ Q1: Pick a traditional - non neural network approach to your problem.  Why did you pick this 
+approach and how well does a traditional approach do?
+
+ Q2: Repeat the answer with a Neural Network approach - compare the two approaches. 
+
+Q3: Pick one of the ‘research questions’ below and explore it with your dataset and neural 
+network. 
+
+RESEARCH QUESTIONS:
+1. How does data augmentation affect the performance of a neural network?
+  
+2. How do parameters of a convolutional (or autoencoder) neural network affect 
+performance of a network?
+3. How does choice of activation function affect the performance of a neural network?
+
+4. How does pre-training (and epochs and batches) affect the performance of a neural 
+network? 
+
+5. How do choices about data such as i) amount of training data and ii) balance of classes in a 
+classification problem affect the performance of a neural network?
+
+
+WHAT THE GITHUB SHOULD LOOK LIKE:
+
+README - this explains your project idea and outlines the structure of the document and 
+how to run it including what python 
+
+dependencies you will need 'dependencies.txt' - this lists your python dependencies
+
+py - this is a folder and your codes are structured under here 
+
+functions.py - a piece of code which includes helper functions you have written such as 
+‘def get_data()’ or ‘def augment_data()’ or def datasplit_train_test()’ etc’ 
+
+Q1_folder - code for answering Q1 lives here. The document to be marked is a single self 
+contained ipynb (which can call your functions.py file) - tidy your notebooks like a ‘medium’ or 
+‘toward data science’ article which provides a tutorial of your method and explains choices 
+made. This notebook should be aimed at a ‘beginner ML audience’.
+
+ Q2_folder - code for answering Q2 lives here. The document to be marked is a single self 
+contained ipynb (which can call your functions.py file) - tidy your notebooks like a ‘medium’ or 
+‘toward data science’ article which provides a tutorial of your method and explains choices 
+made. This notebook should be aimed at a ‘beginner ML audience’. 
+
+Q3_folder - code for answering Q3 lives here. The document to be marked is a single self 
+contained ipynb (which can call your functions.py file) - tidy your notebooks like a ‘medium’ or 
+‘toward data science’ article but this time for an ‘intermediate audience’ - i.e. you can assume 
+your audience has read notebooks Q1 and Q2.
