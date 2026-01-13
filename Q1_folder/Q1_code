@@ -1,7 +1,7 @@
 !pip install seaborn
 !pip install openpyxl
 
-#importing libraries
+#Importing necessary libraries
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -9,11 +9,76 @@ import matplotlib.pyplot as plt
 
 import seaborn as sns
 
-#dependencies for the Random Forest
+#Dependencies for the Random Forest
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score, mean_squared_error
 
-# Set seaborn style
+#Set seaborn style
 sns.set(style="whitegrid")
+
+
+
+#Loading the data and inspecting it 
+file_path = 'data/VideoGames_Sales.xlsx' #Video Game Sales Data Analysis and Prediction on how to load data
+
+DataFrame = pd.read_excel(file_path)
+DataFrame = DataFrame[['console','genre','total_sales(mil)']]
+DataFrame = DataFrame.dropna() #cleaning the data by removing the NaN values from the dataset
+
+DataFrame.head()
+
+DataFrame.info()
+
+
+#Filtering each Console seperately (for PS4, Xbox One, and PC)
+idxps4 = (DataFrame["console"]=="PS4")
+idxone = (DataFrame["console"]=="XOne")
+idxpc = (DataFrame["console"]=="PC")
+
+#Filtering each Genre seperately (for Action, Sports, Role-Playing, and Adventure)
+idxact = (DataFrame["genre"]=="Action")
+idxspo = (DataFrame["genre"]=="Sports")
+idxrp = (DataFrame["genre"]=="Role-Playing")
+idxadv = (DataFrame["genre"]=="Adventure")
+
+#Filtering Console together
+idxt1 = idxps4 | idxone
+idxcon = idxt1 | idxpc
+
+#Filtering Genre together
+idxt2 = idxact | idxspo
+idxt3 = idxt2 | idxrp
+idxgen = idxt3 | idxadv
+idxcon_gen = idxcon & idxgen
+
+#Filter out total sales for random forest
+F_DataFrame = DataFrame[idxcon_gen]
+
+
+#Testing array size of filtered data
+DataFrame[idxcon]
+DataFrame[idxgen]
+DataFrame[idxcon_gen]
+
+
+#Finding the mean of each console x genre to act as a baseline to compare to the Random Forest Regression result
+#Finding the mean of each CONSOLE
+mean_by_console = (DataFrame[idxcon].groupby('console')['total_sales(mil)'].mean().sort_values(ascending=False))
+print(mean_by_console)
+
+#Finding the mean of each GENRE
+mean_by_genre = (DataFrame[idxgen].groupby('genre')['total_sales(mil)'].mean().sort_values(ascending=False))
+print(mean_by_genre)
+
+#Finding the mean of CONSOLE X GENRE
+mean_console_genre = (DataFrame[idxcon_gen].groupby(['console', 'genre'])['total_sales(mil)'].mean().reset_index().sort_values(by='total_sales(mil)', ascending=False))
+print(mean_console_genre)
+
+
+#Encoding the data to x and y
+x = F_DataFrame[['console','genre']]
+y = F_DataFrame['total_sales(mil)']
+x_encoded = pd.get_dummies(x)
+
 
