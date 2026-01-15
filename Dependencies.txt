@@ -1,6 +1,6 @@
-List of Dependencies:
--
--
--
--
--
+seaborn
+openpyxl
+pandas
+numpy
+matplotlib
+scikit-learn
