@@ -14,7 +14,7 @@ The video game market is volatile: publishers care about what kinds of games suc
 
 ## Repository structure
 - `py/functions.py` – helper functions (loading, cleaning, filtering, feature engineering, train/test split, evaluation)
-- `py/Q1/Q1.ipynb` – beginner-friendly tutorial notebook for Question 1
+- `#Q/Q1.ipynb` – beginner-friendly tutorial notebook for Question 1
 - `py/Q2/Q2.ipynb` – beginner-friendly tutorial notebook for Question 2
 - `py/Q3/Q3.ipynb` – intermediate-level notebook for Question 3 (assumes Q1/Q2 context)
 
