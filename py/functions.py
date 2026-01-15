@@ -1,3 +1,7 @@
+# ----------------------------
+# Imports
+# ----------------------------
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -10,7 +14,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score, mean_squared_error
 
+from sklearn.neural_network import MLPRegressor
 
+
+# ----------------------------
+# Q1 nonneural-network helpers
+# ----------------------------
 # ----------------------------
 # 1) Loading + cleaning 
 # ----------------------------
@@ -110,6 +119,7 @@ def encode_console_genre(F_DataFrame: pd.DataFrame) -> Tuple[pd.DataFrame, pd.Se
 # 5) Train/evaluate Random Forest
 # ----------------------------
 def train_and_evaluate_rf(
+        
     x_encoded: pd.DataFrame,
     y: pd.Series,
     test_size: float = 0.2,
@@ -147,6 +157,7 @@ def train_and_evaluate_rf(
 # 6) Predict top console/genre combos
 # ----------------------------
 def top_console_genre_predictions(
+        
     model: RandomForestRegressor,
     F_DataFrame: pd.DataFrame,
     x_encoded_columns: pd.Index,
@@ -165,3 +176,57 @@ def top_console_genre_predictions(
 
     top_combos = combos.sort_values(by="predicted_total_sales(mil)", ascending=False)
     return top_combos.head(top_n)
+
+
+# =========================
+# Q2 Neural Network helpers
+# =========================
+
+
+# =========================
+# 7) neural network training that reuses Q1 encoding (pd.get_dummies).
+# Same interface style as train_and_evaluate_rf: returns (model, results_df).
+# =========================
+def train_and_evaluate_mlp(
+    x_encoded: pd.DataFrame,
+    y: pd.Series,
+    test_size: float = 0.2,
+    random_state: int = 42,
+    hidden_layer_sizes: Tuple[int, ...] = (32, 16),
+    alpha: float = 1e-4,
+    learning_rate_init: float = 1e-3,
+    max_iter: int = 1000,
+    early_stopping: bool = True,
+) -> Tuple[MLPRegressor, pd.DataFrame]:
+
+    x_train, x_test, y_train, y_test = train_test_split(
+        x_encoded, y, test_size=test_size, random_state=random_state
+    )
+
+    model = MLPRegressor(
+        hidden_layer_sizes=hidden_layer_sizes,
+        activation="relu",
+        solver="adam",
+        alpha=alpha,
+        learning_rate_init=learning_rate_init,
+        max_iter=max_iter,
+        early_stopping=early_stopping,
+        random_state=random_state,
+    )
+
+    model.fit(x_train, y_train)
+    y_pred = model.predict(x_test)
+
+    r2 = r2_score(y_test, y_pred)
+    rmse = float(np.sqrt(mean_squared_error(y_test, y_pred)))
+
+    results = pd.DataFrame({
+        "metric": ["r2", "rmse"],
+        "value": [float(r2), rmse]
+    })
+
+    return model, results
+
+
+
+
