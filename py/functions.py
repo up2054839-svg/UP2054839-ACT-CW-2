@@ -193,11 +193,16 @@ def train_and_evaluate_mlp(
     test_size: float = 0.2,
     random_state: int = 42,
     hidden_layer_sizes: Tuple[int, ...] = (32, 16),
+    activation: str = "relu",
     alpha: float = 1e-4,
     learning_rate_init: float = 1e-3,
-    max_iter: int = 1000,
+    max_iter: int = 300,
+    batch_size: int = 32,
     early_stopping: bool = True,
-) -> Tuple[MLPRegressor, pd.DataFrame]:
+    validation_fraction: float = 0.2,
+    n_iter_no_change: int = 20,
+    warm_start: bool = False,
+) -> Tuple[MLPRegressor, pd.DataFrame, Dict[str, object]]:
 
     x_train, x_test, y_train, y_test = train_test_split(
         x_encoded, y, test_size=test_size, random_state=random_state
@@ -205,12 +210,16 @@ def train_and_evaluate_mlp(
 
     model = MLPRegressor(
         hidden_layer_sizes=hidden_layer_sizes,
-        activation="relu",
+        activation=activation,
         solver="adam",
         alpha=alpha,
         learning_rate_init=learning_rate_init,
         max_iter=max_iter,
+        batch_size=batch_size,
         early_stopping=early_stopping,
+        validation_fraction=validation_fraction,
+        n_iter_no_change=n_iter_no_change,
+        warm_start=warm_start,
         random_state=random_state,
     )
 
@@ -225,8 +234,11 @@ def train_and_evaluate_mlp(
         "value": [float(r2), rmse]
     })
 
-    return model, results
+    history = {
+        "loss_curve": getattr(model, "loss_curve_", None),
+        "validation_scores": getattr(model, "validation_scores_", None),
+        "n_iter": getattr(model, "n_iter_", None),
+    }
 
-
-
+    return model, results, history
 
