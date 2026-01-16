@@ -46,7 +46,7 @@ This dataset was chosen because it directly supports the project research questi
 
 ---
 
-## 3. Methods and Project Structure (README Presentation – 5%)
+## 3. Methods and Project Structure
 
 The project is organised in a progressive manner, starting from simple baseline analysis and moving toward more advanced models.
 
@@ -59,14 +59,56 @@ The project is organised in a progressive manner, starting from simple baseline 
    Multi-Layer Perceptron (MLP) models exploring training behaviour, epochs, batch size, and pre-training.
 
 ### Repository Structure
+Q1_folder/
+│── Q1.ipynb # Baseline analysis and Random Forest regression and evaluation
+
+Q2_folder/
+│── Q2.ipynb # Neural network modelling and evaluation
+
+Q3_folder/
+│── Q3.ipynb # Neural network modelling and training analysis
+
 py/
-│── functions.py # Shared helper functions (loading, cleaning, modelling, evaluation)
-│
-├── Q1/
-│ └── Q1.ipynb # Baseline analysis and introductory methods
-│
-├── Q2/
-│ └── Q2.ipynb # Random Forest regression and evaluation
-│
-└── Q3/
-└── Q3.ipynb # Neural network modelling (assumes Q1/Q2 context)
+│── functions.py # Shared helper functions (data loading, cleaning, modelling)
+
+LICENSE
+README.md
+dependencies.txt
+
+
+
+Each notebook builds on the previous one and is written in a tutorial-style format to clearly explain modelling decisions and results.
+
+---
+
+## 4. Dependencies and Software Versions (5%)
+
+All required dependencies are listed and versioned to ensure reproducibility.
+
+### Python Libraries
+- `numpy`
+- `pandas`
+- `matplotlib`
+- `scikit-learn`
+
+Exact package versions are specified in `dependencies.txt`.
+
+## How to Run the Project
+1)Clone the repository
+
+git clone <your-repo-url>
+cd video-game-sales-ml
+
+2)Install dependencies
+
+pip install -r dependencies.txt
+
+3)Run the notebooks
+
+Open the notebooks in Jupyter and run them in order:
+
+1.  Q1_folder/Q1.ipynb
+
+2.  Q2_folder/Q2.ipynb
+
+3.  Q3_folder/Q3.ipynb
